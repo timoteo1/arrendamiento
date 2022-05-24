@@ -1,0 +1,32 @@
+version: "3.1"
+services:
+  db:
+    image: mariadb # Pull mysql image from Docker Hub
+    ports: # Set up ports exposed for other containers to connect to
+      - "3306:3306"
+    volumes:
+      - ./script/myhotel-test.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./script/mydatabase.sql:/docker-entrypoint-initdb.d/2.sql
+    environment: # Set up mysql database name and password
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vehicles_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    networks:
+      - vehicles_network
+
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - vehicles_network
+
+networks:
+  vehicles_network:
