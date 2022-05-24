@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "60a5fb0f-fdb9-4c49-bbb5-9466b79a6a99",
+		"name": "MyHotel-Arrendamiento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateVehicle",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tipoVehiculo\":\"camion\",\r\n    \"marca\":\"Nissan\",\r\n    \"modelo\":2115,\r\n    \"patente\":\"ABC 129\",\r\n    \"anio\": \"2018\",\r\n    \"kilometraje\": 50000,\r\n    \"cilindrada\": 10000,\r\n    \"tonelaje\":\"200000\",\r\n    \"ejes\": 12\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/create/vehicle",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"create",
+						"vehicle"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetVehicle",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/vehicle?patente=ABC 128&tipo=auto",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"vehicle"
+					],
+					"query": [
+						{
+							"key": "patente",
+							"value": "ABC 128"
+						},
+						{
+							"key": "tipo",
+							"value": "auto"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllAutos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/vehicle/allAutos",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"vehicle",
+						"allAutos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllCamiones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/vehicle/allcamiones",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"vehicle",
+						"allcamiones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteVehicle",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/vehicle/delete/ABC 129",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"vehicle",
+						"delete",
+						"ABC 129"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateVehicle",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tipoVehiculo\": \"camion\",\r\n    \"kilometraje\": 50 \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/vehicle/update?patente=ABC 129",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"vehicle",
+						"update"
+					],
+					"query": [
+						{
+							"key": "patente",
+							"value": "ABC 129"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMantencionesAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "GetMantencion{patente}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "CreateMantencion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"km\": 100000,\r\n    \"detalle\": \"Cambio de correa de distribucion\",\r\n    \"patente\": \"ABC 152\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/vehicle/mantencion",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"vehicle",
+						"mantencion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteMantencion{patente}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateMantecion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{urlArrendamiento}}/api//vehicle/mantencion/update",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"",
+						"vehicle",
+						"mantencion",
+						"update"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
