@@ -3,10 +3,8 @@ package com.arrendamiento.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.arrendamiento.dto.AutomovilDto;
 import com.arrendamiento.dto.ResponseDto;
