@@ -1,4 +1,4 @@
-# arrendamiento
+# arrendamiento: ejercicio 1 de PRUEBA TECNICA BACKEND ENGINEER
 
 Solución planteada:
 
@@ -13,6 +13,8 @@ Dentro de la carpeta myhotel-docker se presenta un yaml que permite levantar una
 En caso de no poder levantar el docker en el directorio "dump" del proyecto esta el dump de la base de datos implementada para la solución del ejercicio.
 
 En el directorio diagrama-bd del proyecto se encuentra el diagrama de la base de datos diseñada para la aplicación.
+
+En el directorio postman dentro del proyecto se encuentra un json con una collection de apis que se puede importar en POSTMAN y poder probar las apis del proyecto. 
 
 3) Ejecución de aplicación:
 Ubicarse dentro del proyecto y correr los siguientes comandos:

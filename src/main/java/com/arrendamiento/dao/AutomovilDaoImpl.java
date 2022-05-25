@@ -3,8 +3,10 @@ package com.arrendamiento.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.arrendamiento.dto.AutomovilDto;
 import com.arrendamiento.dto.ResponseDto;
@@ -20,6 +22,7 @@ public class AutomovilDaoImpl implements AutomovilDao {
     MapeoQuery mapeo;
     ResponseService response;
     
+    @Autowired
     public AutomovilDaoImpl(JdbcTemplate jdbcTemplate, VehiculoDaoImpl vehiculoDao, MapeoQuery mapeo,
             ResponseService response) {
         super();
@@ -27,11 +30,6 @@ public class AutomovilDaoImpl implements AutomovilDao {
         this.vehiculoDao = vehiculoDao;
         this.mapeo = mapeo;
         this.response = response;
-    }
-
-    @Autowired
-    public AutomovilDaoImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
     }
     
     @Override
@@ -45,13 +43,13 @@ public class AutomovilDaoImpl implements AutomovilDao {
                 int statusRequest = jdbcTemplate.update(sqlAutomovil, auto.getTipoVehiculo(), auto.getPuertas(), auto.getPasajeros(), auto.getCapacidadMaletero(),
                         auto.getPatente());
                 if(statusRequest == 1) {
-                    return response.setResponse(2, "");
+                    return response.setResponse(2);
                 }
             }
             return status;
         } catch (Exception e) {
            vehiculoDao.deleteVehiculo(auto.getPatente());
-           return response.setResponse(4, e.getMessage());
+           return response.setResponseException(e.getMessage());
         }
     }
 
@@ -79,15 +77,15 @@ public class AutomovilDaoImpl implements AutomovilDao {
     public ResponseDto updateAutomovil(AutomovilDto auto, String patente) {
         
         String query = mapeo.DataUpdateAutomovil(auto);
-        if(query != null) {
-            String sqlUpdateAutomovil = "UPDATE automovil SET" + query + "WHERE PATENTE_AUTOMOVIL = " + patente;
+        if(!query.isEmpty()) {
+            String sqlUpdateAutomovil = String.format("UPDATE automovil SET %s WHERE PATENTE_AUTOMOVIL = '%s'", query, patente); 
             try {
                 jdbcTemplate.update(sqlUpdateAutomovil);
-                return response.setResponse(2, "");
+                return response.setResponse(2);
             } catch (Exception e) {
-                return response.setResponse(4, e.getMessage());
+                return response.setResponseException(e.getMessage());
             } 
         }
-        return response.setResponse(3, "");
+        return response.setResponse(2);
     }
  }

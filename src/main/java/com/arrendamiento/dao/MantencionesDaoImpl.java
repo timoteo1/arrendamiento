@@ -34,37 +34,33 @@ public class MantencionesDaoImpl implements MantencionesDao {
             
             int statusRequest = jdbcTemplate.update(sql, mantencion.getKm(), mantencion.getDetalle(), mantencion.getPatente());
             if(statusRequest == 1) {
-                return response.setResponse(2, "");
+                return response.setResponse(2);
             }
-            return response.setResponse(3, "");
+            return response.setResponse(3);
         } catch (Exception e) {
-            return response.setResponse(4, e.getMessage());
+            return response.setResponseException(e.getMessage());
         }
     }
 
     @Override
     public List<MantencionDto> getMantencion(String patente) {
-        
         String sql = "SELECT * FROM mantenciones WHERE PATENTE_MANTENCION = ?";
         return jdbcTemplate.query(sql, new MantencionRowMapper(), patente);
-        
     }
 
     @Override
     public ResponseDto deleteMantencion(String patente) {         
         try {
             String sqlDelete = "DELETE FROM mantenciones WHERE PATENTE_MANTENCION = ?";
-            
             int status = jdbcTemplate.update(sqlDelete, patente);
-            
             if(status == 1) {
-                return response.setResponse(2, "");
+                return response.setResponse(2);
             }
             else {
-                return response.setResponse(3, "");
+                return response.setResponse(3);
             }
         } catch (Exception e) {
-            return response.setResponse(4, e.getMessage());      
+            return response.setResponseException(e.getMessage());      
        } 
     }
 
@@ -78,15 +74,15 @@ public class MantencionesDaoImpl implements MantencionesDao {
     @Override
     public ResponseDto updateMantencion(String patente, int id, MantencionDto mantencion) {
         String query = mapeo.DataUpdateMantencion(mantencion);
-        if(query != null) {
-            String sqlUpdateMantencion = "UPDATE mantenciones SET " + query + " WHERE PATENTE_MANTENCION = '" + patente + "' AND MANTENCIONES_ID = " + id;
+        if(!query.isEmpty()) {
+            String sqlUpdateMantencion = String.format("UPDATE mantenciones SET %s WHERE PATENTE_MANTENCION = '%s' AND MANTENCIONES_ID = %s", query, patente, id);
             try {
                 jdbcTemplate.update(sqlUpdateMantencion);
-                return response.setResponse(2, "");
+                return response.setResponse(2);
             } catch (Exception e) {
-                return response.setResponse(3, e.getMessage());
+                return response.setResponseException(e.getMessage());
             } 
         }
-        return response.setResponse(3, "");
+        return response.setResponse(2);
     }
 }

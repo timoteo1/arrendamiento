@@ -37,10 +37,10 @@ public class VehiculosService {
         ObjectMapper mapper = new ObjectMapper();
         
         if(vehiculo.getTipoVehiculo() == null)
-            return response.setResponse(1, "");
+            return response.setResponse(1);
             
         if(vehiculoDao.existVehiculo(patente) == 0)
-            return response.setResponse(5, "");
+            return response.setResponse(4);
             
         switch (vehiculo.getTipoVehiculo()) {
         case "auto":
@@ -60,7 +60,7 @@ public class VehiculosService {
                 return camionDao.updateCamion(desCamion, patente);
             }    
         default:
-            return response.setResponse(3, "");
+            return response.setResponse(5);
         }
     }
     
@@ -77,7 +77,7 @@ public class VehiculosService {
             CamionDto desCamion = mapper.readValue(mapper.writeValueAsString(vehiculo), CamionDto.class);
             return camionDao.addCamion(desCamion);
         default:
-            return response.setResponse(6, "");
+            return response.setResponse(5);
         }
     }
     
@@ -95,7 +95,7 @@ public class VehiculosService {
     
     public ResponseDto deleteVehiculo(String patente) {
         if(vehiculoDao.existVehiculo(patente) == 0)
-            return response.setResponse(5, "");
+            return response.setResponse(4);
             
          return vehiculoDao.deleteVehiculo(patente);
     }

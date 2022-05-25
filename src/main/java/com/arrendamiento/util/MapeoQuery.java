@@ -21,11 +21,11 @@ public class MapeoQuery {
         query = (auto.getMarca() != null) ? query + "MARCA = '" + auto.getMarca() + "',": query;
         query = (auto.getCilindrada() != null) ? query + "CILINDRADA = " + auto.getCilindrada() + ",": query;
         
-        if(query!="") {
+        if(!query.isEmpty()) {
             query = query.substring(0, query.length()-1);
             return query;
         }
-        return null;        
+        return query;        
     }
     
     public String DataUpdateAutomovil(AutomovilDto auto) {
@@ -37,11 +37,11 @@ public class MapeoQuery {
         query = (auto.getPasajeros() != null) ? query + "PASAJEROS = " + auto.getPasajeros() + ",": query;
         query = (auto.getCapacidadMaletero() != null) ? query + "CAPACIDAD_MALETERO = " + auto.getCapacidadMaletero() + ",": query;
 
-        if(query!="") {
+        if(!query.isEmpty()) {
             query = query.substring(0, query.length()-1);
             return query;
         }
-        return null;
+        return query;
     }
     
     public String DataUpdateCamion(CamionDto camion) {
@@ -52,11 +52,11 @@ public class MapeoQuery {
         query = (camion.getTonelaje() != null) ? query + "TONELAJE = " + camion.getTonelaje() + ",": query;
         query = (camion.getEjes() != null) ? query + "EJES = " + camion.getEjes() + ",": query;
         
-        if(query!="") {
+        if(!query.isEmpty()) {
             query = query.substring(0, query.length()-1);
             return query;
         }
-        return null;
+        return query;
     }
     
     public String DataUpdateMantencion(MantencionDto mantencion) {
@@ -67,11 +67,11 @@ public class MapeoQuery {
         query = (mantencion.getDetalle() != null) ? query + "DETALLE = '" + mantencion.getDetalle() + "',": query;
         query = (mantencion.getKm() != null) ? query + "KM = " + mantencion.getKm() + ",": query;
         
-        if(query!="") {
+        if(!query.isEmpty()) {
             query = query.substring(0, query.length()-1);
             return query;
         }
-        return null;
+        return query;
         
     }
 

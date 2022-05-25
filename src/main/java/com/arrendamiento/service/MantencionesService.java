@@ -26,7 +26,7 @@ public class MantencionesService {
     public ResponseDto createMantencion(MantencionDto mantencion) {
         
         if(vehiculoDao.existVehiculo(mantencion.getPatente()) == 0)
-            return response.setResponse(5, "");
+            return response.setResponse(4);
             
         return mantencionesDao.createMantencion(mantencion);
     }

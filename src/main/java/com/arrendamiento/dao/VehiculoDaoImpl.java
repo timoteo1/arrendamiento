@@ -31,11 +31,11 @@ public class VehiculoDaoImpl implements VehiculoDao {
             int status =  jdbcTemplate.update(sqlVehiculo, vehiculo.getPatente(), vehiculo.getModelo(), 
                     vehiculo.getAnio(), vehiculo.getKilometraje(), vehiculo.getMarca(), vehiculo.getCilindrada());
             if(status == 1) {
-                return response.setResponse(2, "");
+                return response.setResponse(2);
             }
-            return response.setResponse(3, "");
+            return response.setResponse(3);
         } catch (Exception e) {
-            return response.setResponse(4, e.getMessage());
+            return response.setResponseException(e.getMessage());
         } 
     }
 
@@ -45,36 +45,35 @@ public class VehiculoDaoImpl implements VehiculoDao {
             String sqlDelete = "DELETE FROM vehiculo WHERE patente = ?";
             int status = jdbcTemplate.update(sqlDelete, patente);
             if(status == 1) {
-                return response.setResponse(2, "");
+                return response.setResponse(2);
             }
             else {
-                return response.setResponse(3, "");
+                return response.setResponse(3);
             }
         } catch (Exception e) {
-            return response.setResponse(4, e.getMessage());      
+            return response.setResponseException(e.getMessage());      
        } 
     }
 
     @Override
     public ResponseDto updateVehiculo(VehiculoAbstractDto vehiculo, String patente) {
-        
         String query = mapeo.DataUpdateVehiculo(vehiculo);
-        if(query != null) {
-            String sqlUpdateVehicle = "UPDATE vehiculo SET " + query + " WHERE PATENTE = '" + patente + "'";
+        if(!query.isEmpty()) {
+            String sqlUpdateVehicle = String.format("UPDATE vehiculo SET %s WHERE PATENTE = '%S'", query, patente);
             query = null;
             try {
                 jdbcTemplate.update(sqlUpdateVehicle);
-                return response.setResponse(2, "");
+                return response.setResponse(2);
             } catch (Exception e) {
-                return response.setResponse(3, e.getMessage());
+                return response.setResponseException(e.getMessage());
             } 
         }
-        return response.setResponse(3, "");
+        return response.setResponse(2);
     }
 
     @Override
     public int existVehiculo(String patente) {
-        String sql = "select count(*) from vehiculo where patente = '" + patente + "';";
+        String sql = String.format("select count(*) from vehiculo where patente = '%s'",patente);
         return jdbcTemplate.queryForObject(sql, Integer.class);
     }
 

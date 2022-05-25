@@ -105,7 +105,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{urlArrendamiento}}/api/vehicle/delete/ABC 129",
+					"raw": "{{urlArrendamiento}}/api/vehicle/delete/{patente}",
 					"host": [
 						"{{urlArrendamiento}}"
 					],
@@ -113,7 +113,7 @@
 						"api",
 						"vehicle",
 						"delete",
-						"ABC 129"
+						"{patente}"
 					]
 				}
 			},
@@ -167,7 +167,18 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": null
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/vehicle/mantencion/{patente}",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"vehicle",
+						"mantencion",
+						"{patente}"
+					]
+				}
 			},
 			"response": []
 		},
@@ -202,9 +213,20 @@
 		{
 			"name": "DeleteMantencion{patente}",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
-				"url": null
+				"url": {
+					"raw": "{{urlArrendamiento}}/api/vehicle/mantencion/{patente}",
+					"host": [
+						"{{urlArrendamiento}}"
+					],
+					"path": [
+						"api",
+						"vehicle",
+						"mantencion",
+						"{patente}"
+					]
+				}
 			},
 			"response": []
 		},

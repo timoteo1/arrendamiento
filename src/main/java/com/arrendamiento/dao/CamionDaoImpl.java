@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import com.arrendamiento.dto.CamionDto;
 import com.arrendamiento.dto.ResponseDto;
@@ -27,8 +28,7 @@ public class CamionDaoImpl implements CamionDao {
     }
 
     @Override
-    public ResponseDto addCamion(CamionDto camion) {
-        
+    public ResponseDto addCamion(CamionDto camion) {        
         try {
             ResponseDto status = vehiculoDao.addVehiculo(camion);
             if(status.getCode() == 200) {
@@ -38,13 +38,13 @@ public class CamionDaoImpl implements CamionDao {
                 int statusRequest = jdbcTemplate.update(sqlCamion, camion.getTipoVehiculo(), camion.getTonelaje(), camion.getEjes(),
                         camion.getPatente());
                 if(statusRequest == 1) {
-                    return response.setResponse(2, ""); 
+                    return response.setResponse(2); 
                 }
             }
             return status;
         } catch (Exception e) {
            vehiculoDao.deleteVehiculo(camion.getPatente());
-           return response.setResponse(4, e.getMessage());
+           return response.setResponseException(e.getMessage());
         }
     }
 
@@ -60,25 +60,23 @@ public class CamionDaoImpl implements CamionDao {
     }
 
     @Override
-    public List<CamionDto> getAllCamion() {
-       
-        String sql = "select v.*, c.* from vehiculo v inner join camion c ON v.PATENTE = c.PATENTE_CAMION";
-        
+    public List<CamionDto> getAllCamion() {       
+        String sql = "select v.*, c.* from vehiculo v inner join camion c ON v.PATENTE = c.PATENTE_CAMION";        
         return jdbcTemplate.query(sql, new CamionRowMapper());
     }
 
     @Override
     public ResponseDto updateCamion(CamionDto camion, String patente) {
         String query = mapeo.DataUpdateCamion(camion);
-        if(query != null) {
-            String sqlUpdateCamion = "UPDATE camion SET " + query + " WHERE PATENTE_CAMION = '" + patente + "'";
+        if(!query.isEmpty()) {
+            String sqlUpdateCamion = String.format("UPDATE camion SET %s WHERE PATENTE_CAMION = '%s'", query, patente);
             try {
                 jdbcTemplate.update(sqlUpdateCamion);
-                return response.setResponse(2, "");
+                return response.setResponse(2);
             } catch (Exception e) {
-                return response.setResponse(4, e.getMessage());
+                return response.setResponseException(e.getMessage());
             } 
         }
-        return response.setResponse(3, "");
+        return response.setResponse(2);
     }
 }
